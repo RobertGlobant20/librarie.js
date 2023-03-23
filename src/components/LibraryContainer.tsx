@@ -26,7 +26,8 @@ export interface LibraryContainerStates {
     selectedCategories: string[],
     structured: boolean,
     detailed: boolean
-    showItemSummary: boolean
+    showItemSummary: boolean,
+    tooltipContent: string
 }
 
 export class LibraryContainer extends React.Component<LibraryContainerProps, LibraryContainerStates> {
@@ -74,6 +75,7 @@ export class LibraryContainer extends React.Component<LibraryContainerProps, Lib
             selectedCategories: [],
             structured: false,
             detailed: false,
+            tooltipContent: "hello",
             showItemSummary: false // disable expandable tool tip by default
         };
     }
@@ -322,6 +324,10 @@ export class LibraryContainer extends React.Component<LibraryContainerProps, Lib
         this.selectionIndex = index;
     }
 
+    setTooltipText(content: string){
+        this.setState({tooltipContent: content});
+    }
+
     // Direct back to library and expand items based on pathToItem. 
     directToLibrary(pathToItem: LibraryUtilities.ItemData[]) {
         LibraryUtilities.setItemStateRecursive(this.generatedSections, true, false);
@@ -347,12 +353,13 @@ export class LibraryContainer extends React.Component<LibraryContainerProps, Lib
                         libraryContainer={this}
                         data={data}
                         showItemSummary={this.state.showItemSummary}
+                        tooltipContent={this.state.tooltipContent}
                     />
                 }
                 );
             } else if (this.state.structured) {
                 sections = this.searchResultItems.map(item =>
-                    <LibraryItem key={index++} data={item} libraryContainer={this} showItemSummary={this.state.showItemSummary} />
+                    <LibraryItem key={index++} data={item} libraryContainer={this} showItemSummary={this.state.showItemSummary} tooltipContent={this.state.tooltipContent}/>
                 );
             } else {
                 sections = this.searchResultItems.map(item =>

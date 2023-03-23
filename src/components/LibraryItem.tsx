@@ -28,6 +28,7 @@ export interface LibraryItemProps {
     showItemSummary: boolean,
     isLastItem?: boolean,
     onItemWillExpand?: Function
+    tooltipContent: string
 }
 
 export interface LibraryItemState {
@@ -355,6 +356,7 @@ export class LibraryItem extends React.Component<LibraryItemProps, LibraryItemSt
                             data={item}
                             showItemSummary={this.props.showItemSummary}
                             isLastItem={isLastItem}
+                            tooltipContent={this.props.tooltipContent}
                             onItemWillExpand={(args: any) => {
                                 this.onSingleChildItemWillExpand();
                                 this.props.libraryContainer.scrollToExpandedItem(args)
@@ -378,6 +380,7 @@ export class LibraryItem extends React.Component<LibraryItemProps, LibraryItemSt
                 libraryContainer={this.props.libraryContainer}
                 icon={require("../resources/icons/library-create.svg")}
                 clusterType="create"
+                tooltipContent = {this.props.tooltipContent}
                 showItemSummary={this.props.showItemSummary}
                 childItems={createMethods} />);
         }
@@ -388,6 +391,7 @@ export class LibraryItem extends React.Component<LibraryItemProps, LibraryItemSt
                 libraryContainer={this.props.libraryContainer}
                 icon={require("../resources/icons/library-action.svg")}
                 clusterType="action"
+                tooltipContent = {this.props.tooltipContent}
                 showItemSummary={this.props.showItemSummary}
                 childItems={actionMethods} />);
         }
@@ -398,6 +402,7 @@ export class LibraryItem extends React.Component<LibraryItemProps, LibraryItemSt
                 libraryContainer={this.props.libraryContainer}
                 icon={require("../resources/icons/library-query.svg")}
                 clusterType="query"
+                tooltipContent = {this.props.tooltipContent}
                 showItemSummary={this.props.showItemSummary}
                 childItems={queryMethods} />);
         }

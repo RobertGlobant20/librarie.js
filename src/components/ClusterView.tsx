@@ -21,14 +21,17 @@ import * as React from "react";
 import { LibraryContainer } from "./LibraryContainer";
 import { LibraryItem } from "./LibraryItem";
 import { ItemData } from "../LibraryUtilities";
+import { Tooltip } from "react-tooltip";
 
 export interface ClusterViewProps {
     libraryContainer: LibraryContainer,
     icon: any,
     clusterType: string,
     showItemSummary: boolean,
-    childItems: ItemData[]
+    childItems: ItemData[],
+    tooltipContent: string
 }
+
 
 export class ClusterView extends React.Component<ClusterViewProps, undefined> {
 
@@ -36,7 +39,15 @@ export class ClusterView extends React.Component<ClusterViewProps, undefined> {
         return (
             <div className={"ClusterViewContainer"}>
                 <div className={`ClusterLeftPane ${this.props.clusterType}`}>
+                <a id={this.props.clusterType} className={"tooltipWrapper"}>
                     <img className={"ClusterIcon"} src={this.props.icon} />
+                </a>
+                    <Tooltip
+                            anchorSelect={`#${this.props.clusterType}`}
+                            place="bottom"
+                            content={this.props.tooltipContent}
+                            className={"customTooltip"}
+                        />
                 </div>
                 <div className={"ClusterRightPane"}>
                     {this.getNestedElements()}
@@ -53,6 +64,7 @@ export class ClusterView extends React.Component<ClusterViewProps, undefined> {
                 key={index++}
                 libraryContainer={this.props.libraryContainer}
                 showItemSummary={this.props.showItemSummary}
+                tooltipContent={this.props.tooltipContent}
                 data={item}
             />);
         });
